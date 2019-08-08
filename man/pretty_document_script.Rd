@@ -35,17 +35,17 @@ space.
 # From these examples it seems that
 #	- currentpackage is unnecessary
 #	- Not exporting seems no problem.
-
+print(getwd())
 pretty_document_script(
-	path.R.script = "R/hello2.R"
-	,path.Rd.file = "man/hello2.Rd"
+	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
+	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
 	,outputfile = "prettyhelp/hello2.html"
 	# ,currentpackage = "DocumentFunctions"
 	,check_package = FALSE)
 
 pretty_document_script(
-	path.R.script = "R/hello2.R"
-	,path.Rd.file = "man/hello2.Rd"
+	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
+	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
 	,outputfile = "prettyhelp/hello2_withCurrentPackage.html"
 	,currentpackage = "DocumentFunctions"
 	,check_package = FALSE)
@@ -56,7 +56,5 @@ pretty_document_script(
 #	,path.Rd.file = "../Rvarious/man/applySignature.Rd"
 #	,outputfile = "../Rvarious/prettyhelp/applySignature.html"
 #	,check_package = FALSE)
-
-
 
 }

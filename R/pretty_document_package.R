@@ -8,6 +8,9 @@
 #'
 #' @param output.dir
 #' Where should the pretty manpages be saved? Usually in "package/inst/pretty_man"
+#'
+#' file.path("inst", "pretty_man") has gone deprecated because the package size goes
+#' then quite up.
 #' @param verbose
 #' Should I give my current status?
 #'
@@ -21,7 +24,7 @@
 #' #  search "dontrun"
 #' # pretty_document_package(package.path = ".")
 pretty_document_package <- function(package.path
-									,output.dir=file.path("inst", "pretty_man")
+									,output.dir=file.path("pretty_man")
 									,verbose=TRUE){
 	if(package.path != "."){
 		if(grepl("/$", package.path)){
@@ -31,7 +34,7 @@ pretty_document_package <- function(package.path
 		}
 	}
 
-	if(output.dir == file.path("inst", "pretty_man")){
+	if(output.dir == file.path("pretty_man")){
 		output.dir <- file.path(package.path, output.dir)
 	}
 	all_rd_files <- devtools:::rd_files(package.path)

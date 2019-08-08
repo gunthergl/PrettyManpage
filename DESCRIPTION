@@ -1,13 +1,18 @@
 Package: PrettyManpage
 Type: Package
 Title: Pretty manpages
-Version: 0.1.0
-Author: Gunther Glehr
-Maintainer: Gunther Glehr <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Version: 0.1.1
+Author: gunthergl
+Maintainer: gunthergl <gunthergl@gmx.net>
+Description: uses an R-script with Roxygen comments and builds an html-manpage.
+    This manpage then looks roughly like R-helppages just that the examples are run.
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-
+Imports: 
+    devtools,
+    rmarkdown,
+    tools,
+    xml2,
+    document

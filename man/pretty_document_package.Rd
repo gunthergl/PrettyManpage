@@ -4,13 +4,16 @@
 \alias{pretty_document_package}
 \title{Pretty document a package}
 \usage{
-pretty_document_package(package.path, output.dir = file.path("inst",
-  "pretty_man"), verbose = TRUE)
+pretty_document_package(package.path,
+  output.dir = file.path("pretty_man"), verbose = TRUE)
 }
 \arguments{
 \item{package.path}{Where is the package located?}
 
-\item{output.dir}{Where should the pretty manpages be saved? Usually in "package/inst/pretty_man"}
+\item{output.dir}{Where should the pretty manpages be saved? Usually in "package/inst/pretty_man"
+
+file.path("inst", "pretty_man") has gone deprecated because the package size goes
+then quite up.}
 
 \item{verbose}{Should I give my current status?}
 }
