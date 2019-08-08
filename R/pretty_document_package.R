@@ -73,7 +73,7 @@ pretty_document_package <- function(package.path
 
 		})
 		if(verbose)
-			cat(r.fileX, "  done\n\n")
+			cat(file.path(output.dir, out.file), "  saved\n\n")
 	}
 	return(invisible(all_r_files))
 }
