@@ -42,14 +42,13 @@ pretty_document_package <- function(package.path
 		output.dir <- file.path(package.path, output.dir)
 	}
 	all_r_files <- list.files(file.path(package.path, "R"))
-	#	devtools:::rd_files(package.path)
-	for(rd.fileX in all_rd_files){
+	for(r.fileX in all_r_files){
 		if(verbose)
-			cat("Start ", rd.fileX, "\n\n")
-		r.fileX <- sub("Rd$", "R", rd.fileX)
-		r.fileX <- sub("/man/", "/R/", r.fileX)
-		out.file <- sub(".*/", "", rd.fileX)
-		out.file <- sub(".Rd$", ".html", out.file)
+			cat("Start ", r.fileX, "\n\n")
+		rd.fileX <- sub("R$", "Rd", r.fileX)
+		rd.fileX <- sub("/R/", "/man/", rd.fileX)
+		out.file <- sub(".*/", "", r.fileX)
+		out.file <- sub(".R$", ".html", out.file)
 		tryCatch(expr = {
 			if(use.existing.rds){
 				pretty_document_script_rd(path.R.script = r.fileX
@@ -62,7 +61,7 @@ pretty_document_package <- function(package.path
 		}, error=function(e){
 			if(grepl("failed: File does not exist:", e)){
 				warning(
-					paste0("Error when pretty-helping ", rd.fileX
+					paste0("Error when pretty-helping ", r.fileX
 						   , "\n Tried to access a file which does not exist."
 						   ,"\n This is probably because the .Rmd which calls the function"
 						   ,"\n is not in the root-directory of the package."
@@ -73,9 +72,8 @@ pretty_document_package <- function(package.path
 
 		})
 		if(verbose)
-			cat(rd.fileX, "  done\n\n")
+			cat(r.fileX, "  done\n\n")
 	}
-
-	return(invisible(all_rd_files))
+	return(invisible(all_r_files))
 }
 

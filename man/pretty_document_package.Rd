@@ -17,6 +17,8 @@ file.path("inst", "pretty_man") has gone deprecated because the package size goe
 then quite up.}
 
 \item{verbose}{Should I give my current status?}
+
+\item{use.existing.rds}{If TRUE, the function \code{pretty_document_script_rd} is called instead of \code{pretty_document_script}.}
 }
 \value{
 invisible(all_rd_files) # All rd-files which were completed
