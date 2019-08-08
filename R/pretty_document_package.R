@@ -41,16 +41,17 @@ pretty_document_package <- function(package.path
 	if(output.dir == file.path("pretty_man")){
 		output.dir <- file.path(package.path, output.dir)
 	}
-	all_r_files <- list.files(file.path(package.path, "R"), full.names = TRUE)
+	all_r_files <- list.files(file.path(package.path, "R"), pattern = "\\.R$"
+							  ,full.names = TRUE)
 	for(r.fileX in all_r_files){
 		if(verbose)
 			cat("Start ", r.fileX, "\n\n")
-		rd.fileX <- sub("R$", "Rd", r.fileX)
-		rd.fileX <- sub("/R/", "/man/", rd.fileX)
 		out.file <- sub(".*/", "", r.fileX)
 		out.file <- sub(".R$", ".html", out.file)
 		tryCatch(expr = {
 			if(use.existing.rds){
+				rd.fileX <- sub("R$", "Rd", r.fileX)
+				rd.fileX <- sub("/R/", "/man/", rd.fileX)
 				pretty_document_script_rd(path.R.script = r.fileX
 										  ,path.Rd.file = rd.fileX
 										  ,outputfile = file.path(output.dir, out.file))
