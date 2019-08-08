@@ -6,6 +6,8 @@
 #' space.
 #' @param path.R.script
 #' 	Path to the R-script
+#' @param path.Rd.file
+#' path to the corresponding .Rd file
 #' @param outputfile
 #' Where should the output html be saved?
 #' @param currentpackage
@@ -21,12 +23,35 @@
 #' @export
 #'
 #' @examples
+#' # From these examples it seems that
+#' #	- currentpackage is unnecessary
+#' #	- Not exporting seems no problem.
+#' print(getwd())
+#' pretty_document_script(
+#' 	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
+#' 	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
+#' 	,outputfile = "prettyhelp/hello2.html"
+#' 	# ,currentpackage = "DocumentFunctions"
+#' 	,check_package = FALSE)
 #'
 #' pretty_document_script(
-#' 	path.R.script = "R/hello2.R"
-#' 	,outputfile = "prettyhelp/hello2.html"
+#' 	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
+#' 	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
+#' 	,outputfile = "prettyhelp/hello2_withCurrentPackage.html"
+#' 	,currentpackage = "DocumentFunctions"
 #' 	,check_package = FALSE)
-pretty_document_script <- function(path.R.script
+#'
+#'
+#' # pretty_document_script(
+#' #	path.R.script = "../Rvarious/R/applySignature.R"
+#' #	,path.Rd.file = "../Rvarious/man/applySignature.Rd"
+#' #	,outputfile = "../Rvarious/prettyhelp/applySignature.html"
+#' #	,check_package = FALSE)
+#'
+
+
+pretty_document_script_rd <- function(path.R.script
+								   ,path.Rd.file
 								   ,outputfile
 								   ,currentpackage
 								   ,check_package=FALSE){
@@ -45,17 +70,13 @@ pretty_document_script <- function(path.R.script
 	documented.paths <- document::document(path.R.script, check_package = check_package
 										   ,output_directory = tmpdir)
 
-	examples <- readLines(documented.paths$txt_path)
-	scriptname <- examples[1]
-	examples <- examples[-c(1:which(examples == "Examples:"))]
-	examples <- sub("^[ ]*", "", examples)
-
 	# Extracting the examples
-	# examples <- utils::capture.output(tools::Rd2ex(path.Rd.file))
+	examples <- utils::capture.output(tools::Rd2ex(path.Rd.file))
 	if(length(examples) == 0){
-		warning("No \"Examples:\" found in ", documented.paths$txt_path)
+		warning("No examples found by tools::Rd2ex() in ", path.Rd.file)
 		return(NULL)
 	}
+	scriptname <- sub("### Name: ", "", examples[1])
 	example.tmp_R <- file.path(tmpdir, "example_tmpfile.R")
 	example.tmp_html <- file.path(tmpdir, "example_tmpfile.html")
 	# make a new file really only including the examples and no further information
@@ -63,7 +84,7 @@ pretty_document_script <- function(path.R.script
 	if(!missing(currentpackage)){
 		cat("library(\"", currentpackage, "\")\n", sep="")
 	}
-	cat(examples, sep="\n")
+	cat(examples[-c(1:which("### ** Examples" == examples))], sep="\n")
 	sink()
 	# render the examples to markdown
 	rmarkdown::render(example.tmp_R, output_format = "html_document")
@@ -100,4 +121,3 @@ pretty_document_script <- function(path.R.script
 	unlink(tmpdir, recursive = TRUE)
 	return(invisible(NULL))
 }
-

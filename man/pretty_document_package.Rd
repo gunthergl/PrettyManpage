@@ -5,7 +5,8 @@
 \title{Pretty document a package}
 \usage{
 pretty_document_package(package.path,
-  output.dir = file.path("pretty_man"), verbose = TRUE)
+  output.dir = file.path("pretty_man"), verbose = TRUE,
+  use.existing.rds = FALSE)
 }
 \arguments{
 \item{package.path}{Where is the package located?}
@@ -21,7 +22,7 @@ then quite up.}
 invisible(all_rd_files) # All rd-files which were completed
 }
 \description{
-Document scripts-manpages in .html *with* running the examples and giving the
+Document scripts-manpages in .html \emph{with} running the examples and giving the
 output for a complete package.
 }
 \examples{

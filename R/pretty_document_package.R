@@ -11,8 +11,11 @@
 #'
 #' file.path("inst", "pretty_man") has gone deprecated because the package size goes
 #' then quite up.
+#' @param use.existing.rds
+#' If TRUE, the function `pretty_document_script_rd` is called instead of `pretty_document_script`.
 #' @param verbose
 #' Should I give my current status?
+#'
 #'
 #' @return
 #' invisible(all_rd_files) # All rd-files which were completed
@@ -25,7 +28,8 @@
 #' # pretty_document_package(package.path = ".")
 pretty_document_package <- function(package.path
 									,output.dir=file.path("pretty_man")
-									,verbose=TRUE){
+									,verbose=TRUE
+									,use.existing.rds=FALSE){
 	if(package.path != "."){
 		if(grepl("/$", package.path)){
 			package.path <-  paste0(package.path, ".")
@@ -37,7 +41,8 @@ pretty_document_package <- function(package.path
 	if(output.dir == file.path("pretty_man")){
 		output.dir <- file.path(package.path, output.dir)
 	}
-	all_rd_files <- devtools:::rd_files(package.path)
+	all_r_files <- list.files(file.path(package.path, "R"))
+	#	devtools:::rd_files(package.path)
 	for(rd.fileX in all_rd_files){
 		if(verbose)
 			cat("Start ", rd.fileX, "\n\n")
@@ -46,9 +51,14 @@ pretty_document_package <- function(package.path
 		out.file <- sub(".*/", "", rd.fileX)
 		out.file <- sub(".Rd$", ".html", out.file)
 		tryCatch(expr = {
-			pretty_document_script(path.R.script = r.fileX
-								   ,path.Rd.file = rd.fileX
-								   ,outputfile = file.path(output.dir, out.file))
+			if(use.existing.rds){
+				pretty_document_script_rd(path.R.script = r.fileX
+										  ,path.Rd.file = rd.fileX
+										  ,outputfile = file.path(output.dir, out.file))
+			}else{
+				pretty_document_script(path.R.script = r.fileX
+									   ,outputfile = file.path(output.dir, out.file))
+			}
 		}, error=function(e){
 			if(grepl("failed: File does not exist:", e)){
 				warning(

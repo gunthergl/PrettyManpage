@@ -4,13 +4,11 @@
 \alias{pretty_document_script}
 \title{Pretty document scripts}
 \usage{
-pretty_document_script(path.R.script, path.Rd.file, outputfile,
-  currentpackage, check_package = FALSE)
+pretty_document_script(path.R.script, outputfile, currentpackage,
+  check_package = FALSE)
 }
 \arguments{
 \item{path.R.script}{Path to the R-script}
-
-\item{path.Rd.file}{path to the corresponding .Rd file}
 
 \item{outputfile}{Where should the output html be saved?}
 
@@ -25,36 +23,16 @@ I assume that the package has to be built in other ways.}
 invisible(NULL)
 }
 \description{
-Document scripts in .html *with* running the examples and giving the output
+Document scripts in .html \emph{with} running the examples and giving the output
 }
 \details{
 I understand that this is no wanted standard behaviour because this takes much
 space.
 }
 \examples{
-# From these examples it seems that
-#	- currentpackage is unnecessary
-#	- Not exporting seems no problem.
-print(getwd())
+
 pretty_document_script(
-	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
-	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
+	path.R.script = "R/hello2.R"
 	,outputfile = "prettyhelp/hello2.html"
-	# ,currentpackage = "DocumentFunctions"
 	,check_package = FALSE)
-
-pretty_document_script(
-	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
-	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
-	,outputfile = "prettyhelp/hello2_withCurrentPackage.html"
-	,currentpackage = "DocumentFunctions"
-	,check_package = FALSE)
-
-
-# pretty_document_script(
-#	path.R.script = "../Rvarious/R/applySignature.R"
-#	,path.Rd.file = "../Rvarious/man/applySignature.Rd"
-#	,outputfile = "../Rvarious/prettyhelp/applySignature.html"
-#	,check_package = FALSE)
-
 }

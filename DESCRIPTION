@@ -1,7 +1,7 @@
 Package: PrettyManpage
 Type: Package
 Title: Pretty manpages
-Version: 0.1.1
+Version: 0.1.2
 Author: gunthergl
 Maintainer: gunthergl <gunthergl@gmx.net>
 Description: uses an R-script with Roxygen comments and builds an html-manpage.
@@ -16,3 +16,4 @@ Imports:
     tools,
     xml2,
     document
+Roxygen: list(markdown = TRUE)
