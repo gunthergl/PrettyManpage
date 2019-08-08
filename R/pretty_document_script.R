@@ -40,11 +40,28 @@ pretty_document_script <- function(path.R.script
 	}
 
 	tmpdir <- file.path(dirname(path.R.script), "tmp_removeme")
-	dir.create(tmpdir, recursive = TRUE)
+	dir.create(tmpdir, recursive = TRUE, showWarnings = FALSE)
 	# Building the R helppage
 	# Package checking should be done during build process. It just takes time.
-	documented.paths <- document::document(path.R.script, check_package = check_package
-										   ,output_directory = tmpdir)
+	withCallingHandlers(expr = {
+		withRestarts({
+			documented.paths <- document::document(path.R.script, check_package = check_package
+												   ,output_directory = tmpdir)
+		}, muffleStopWarning=function() {
+			message(paste0("No roxygen comments in ", path.R.script, " --> File skipped"))
+		})
+
+	}, warning=function(w){
+		if(grepl("Couldn't find roxygen comments", w)){
+			invokeRestart("muffleStopWarning")
+		}else{
+			warning(w)
+			invokeRestart("muffleWarning")
+		}
+		return(NULL)
+	})
+	if(!exists("documented.paths"))
+		return(invisible(NULL))
 
 	examples <- readLines(documented.paths$txt_path)
 	scriptname <- examples[1]
@@ -54,7 +71,7 @@ pretty_document_script <- function(path.R.script
 	# Extracting the examples
 	# examples <- utils::capture.output(tools::Rd2ex(path.Rd.file))
 	if(length(examples) == 0){
-		warning("No \"Examples:\" found in ", documented.paths$txt_path)
+		warning(paste0("No \"Examples:\" found in ", documented.paths$txt_path))
 		return(NULL)
 	}
 	example.tmp_R <- file.path(tmpdir, "example_tmpfile.R")
