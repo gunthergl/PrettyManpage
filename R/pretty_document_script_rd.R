@@ -31,14 +31,14 @@
 #' 	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
 #' 	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
 #' 	,outputfile = "prettyhelp/hello2.html"
-#' 	# ,currentpackage = "DocumentFunctions"
+#' 	# ,currentpackage = "PrettyManpage"
 #' 	,check_package = FALSE)
 #'
 #' pretty_document_script_rd(
 #' 	path.R.script = "PrettyManpage/hello2.R" #"R/hello2.R"
 #' 	,path.Rd.file = "PrettyManpage/hello2.Rd" #"man/hello2.Rd"
 #' 	,outputfile = "prettyhelp/hello2_withCurrentPackage.html"
-#' 	,currentpackage = "DocumentFunctions"
+#' 	,currentpackage = "PrettyManpage"
 #' 	,check_package = FALSE)
 #'
 #'
