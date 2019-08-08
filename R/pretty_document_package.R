@@ -41,7 +41,7 @@ pretty_document_package <- function(package.path
 	if(output.dir == file.path("pretty_man")){
 		output.dir <- file.path(package.path, output.dir)
 	}
-	all_r_files <- list.files(file.path(package.path, "R"))
+	all_r_files <- list.files(file.path(package.path, "R"), full.names = TRUE)
 	for(r.fileX in all_r_files){
 		if(verbose)
 			cat("Start ", r.fileX, "\n\n")
