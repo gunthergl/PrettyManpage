@@ -65,15 +65,16 @@ pretty_document_script <- function(path.R.script
 
 	examples <- readLines(documented.paths$txt_path)
 	scriptname <- examples[1]
-	examples <- examples[-c(1:which(examples == "Examples:"))]
-	examples <- sub("^[ ]*", "", examples)
-
+	where.is.examples <- which(examples == "Examples:")
 	# Extracting the examples
 	# examples <- utils::capture.output(tools::Rd2ex(path.Rd.file))
-	if(length(examples) == 0){
-		warning(paste0("No \"Examples:\" found in ", documented.paths$txt_path))
+	if(length(where.is.examples) != 1){
+		warning(paste0("No or multiple \"Examples:\" found in ", documented.paths$txt_path))
 		return(NULL)
 	}
+	examples <- examples[-c(1:where.is.examples)]
+	examples <- sub("^[ ]*", "", examples)
+
 	example.tmp_R <- file.path(tmpdir, "example_tmpfile.R")
 	example.tmp_html <- file.path(tmpdir, "example_tmpfile.html")
 	# make a new file really only including the examples and no further information
