@@ -23,9 +23,10 @@
 #' @examples
 #'
 #' pretty_document_script(
-#' 	path.R.script = "R/hello2.R"
+#' 	path.R.script = file.path("PrettyManpage", "hello2.R") #"R/hello2.R"
 #' 	,outputfile = "prettyhelp/hello2.html"
 #' 	,check_package = FALSE)
+#'
 pretty_document_script <- function(path.R.script
 								   ,outputfile
 								   ,currentpackage
